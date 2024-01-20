@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expense_tracker/expenses_list.dart';
+import 'package:flutter_expense_tracker/models/expense.dart';
 
 class ExpenseTracker extends StatefulWidget {
   const ExpenseTracker({Key? key}) : super(key: key);
@@ -8,16 +10,43 @@ class ExpenseTracker extends StatefulWidget {
 }
 
 class _ExpenseTrackerState extends State<ExpenseTracker> {
+  final List<Expense> _dummyExpenses = [
+    Expense(
+      title: "Groceries",
+      amount: 100.00,
+      date: DateTime.now(),
+      category: Category.food,
+    ),
+    Expense(
+      title: "Rent",
+      amount: 500.00,
+      date: DateTime.now(),
+      category: Category.rent,
+    ),
+    Expense(
+      title: "Gas",
+      amount: 50.00,
+      date: DateTime.now(),
+      category: Category.utilities,
+    ),
+    Expense(
+      title: "Movie",
+      amount: 20.00,
+      date: DateTime.now(),
+      category: Category.entertainment,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Flutter Expense Tracker"),
       ),
-      body: const Column(
+      body: Column(
         children: [
-          Text("Expense Dashboard"),
-          Text("Expense List"),
+          const Text("Expense Dashboard"),
+          ExpensesList(expenses: _dummyExpenses),
         ],
       ),
     );
