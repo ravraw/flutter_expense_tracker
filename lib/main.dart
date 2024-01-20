@@ -3,6 +3,7 @@ import 'package:flutter_expense_tracker/expense_tracker.dart';
 
 main() {
   runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: ExpenseTracker(),
   ));
 }
