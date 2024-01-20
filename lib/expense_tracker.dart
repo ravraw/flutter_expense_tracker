@@ -27,7 +27,7 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
       title: "Gas",
       amount: 50.00,
       date: DateTime.now(),
-      category: Category.travel,
+      category: Category.utilities,
     ),
     Expense(
       title: "Movie",
@@ -42,6 +42,12 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Flutter Expense Tracker"),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: Column(
         children: [
