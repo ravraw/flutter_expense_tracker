@@ -10,6 +10,13 @@ class ExpenseTracker extends StatefulWidget {
 class _ExpenseTrackerState extends State<ExpenseTracker> {
   @override
   Widget build(BuildContext context) {
-    return const Text("Hello World");
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Flutter Expense Tracker"),
+      ),
+      body: const Center(
+        child: ExpenseTracker(),
+      ),
+    );
   }
 }
