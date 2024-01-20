@@ -27,7 +27,7 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
       title: "Gas",
       amount: 50.00,
       date: DateTime.now(),
-      category: Category.utilities,
+      category: Category.travel,
     ),
     Expense(
       title: "Movie",
