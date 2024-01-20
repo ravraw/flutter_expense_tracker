@@ -14,8 +14,11 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
       appBar: AppBar(
         title: const Text("Flutter Expense Tracker"),
       ),
-      body: const Center(
-        child: ExpenseTracker(),
+      body: const Column(
+        children: [
+          Text("Expense Dashboard"),
+          Text("Expense List"),
+        ],
       ),
     );
   }
