@@ -18,17 +18,21 @@ class ExpensesList extends StatelessWidget {
           itemCount: expenses.length,
           itemBuilder: (context, index) {
             final expense = expenses[index];
-            return Dismissible(
-              key: ValueKey(expense),
-              background: Container(
-                color: Colors.red,
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.only(right: 20),
-                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-                child: const Icon(Icons.delete),
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              child: Dismissible(
+                key: ValueKey(expense),
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(right: 20),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+                  child: const Icon(Icons.delete),
+                ),
+                onDismissed: (direction) => removeExpense(expense),
+                child: ExpenseItem(expense: expense),
               ),
-              onDismissed: (direction) => removeExpense(expense),
-              child: ExpenseItem(expense: expense),
             );
           }),
     );
