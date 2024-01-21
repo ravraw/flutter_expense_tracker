@@ -45,9 +45,24 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
   }
 
   void _removeExpense(Expense expense) {
+    final expenseIndex = _dummyExpenses.indexOf(expense);
     setState(() {
       _dummyExpenses.remove(expense);
     });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("${expense.title} removed!"),
+        duration: const Duration(seconds: 5),
+        action: SnackBarAction(
+          label: "UNDO",
+          onPressed: () {
+            setState(() {
+              _dummyExpenses.insert(expenseIndex, expense);
+            });
+          },
+        ),
+      ),
+    );
   }
 
   void _openAddExpenseOverlay() {
