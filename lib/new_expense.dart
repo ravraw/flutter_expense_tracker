@@ -11,6 +11,16 @@ class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
 
+  void _presentDatePicker() {
+    final now = DateTime.now();
+    showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: now.subtract(const Duration(days: 365)),
+      lastDate: now,
+    );
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -28,17 +38,31 @@ class _NewExpenseState extends State<NewExpense> {
             decoration: const InputDecoration(labelText: "Title"),
             maxLength: 50,
           ),
-          TextField(
-            controller: _amountController,
-            keyboardType: TextInputType.number,
-            decoration:
-                const InputDecoration(prefixText: '\$ ', labelText: "Amount"),
-          ),
-          const TextField(
-            decoration: InputDecoration(labelText: "Date"),
-          ),
-          const TextField(
-            decoration: InputDecoration(labelText: "Category"),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _amountController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                      prefixText: '\$ ', labelText: "Amount"),
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text('Selected Date'),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      onPressed: _presentDatePicker,
+                      icon: const Icon(Icons.calendar_month),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
           const SizedBox(height: 16),
           Row(
