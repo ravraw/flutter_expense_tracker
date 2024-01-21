@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart' hide Category;
 import 'package:flutter_expense_tracker/models/expense.dart' as expense_model;
 
 class NewExpense extends StatefulWidget {
@@ -13,15 +12,29 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  DateTime? _selectedDate;
+  expense_model.Category? _selectedCategory;
 
-  void _presentDatePicker() {
+  void _presentDatePicker() async {
     final now = DateTime.now();
-    showDatePicker(
+    final pickedDate = await showDatePicker(
       context: context,
       initialDate: now,
       firstDate: now.subtract(const Duration(days: 365)),
       lastDate: now,
     );
+    setState(() {
+      _selectedDate = pickedDate;
+    });
+  }
+
+  void _setCategory(expense_model.Category category) {
+    if (category == _selectedCategory) {
+      return;
+    }
+    setState(() {
+      _selectedCategory = category;
+    });
   }
 
   @override
@@ -72,6 +85,7 @@ class _NewExpenseState extends State<NewExpense> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DropdownButton(
+                value: _selectedCategory,
                 items: expense_model.Category.values
                     .map((category) => DropdownMenuItem(
                           value: category,
@@ -82,13 +96,20 @@ class _NewExpenseState extends State<NewExpense> {
                               describeEnum(category).substring(1)),
                         ))
                     .toList(),
-                onChanged: (value) {},
-                hint: const Text("Category"),
+                onChanged: (value) {
+                  if (value == null) {
+                    return;
+                  }
+                  _setCategory(value);
+                },
+                hint: const Text("Select Category"),
               ),
+              const Spacer(),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
+                style: TextButton.styleFrom(foregroundColor: Colors.red),
                 child: const Text("Cancel"),
               ),
               ElevatedButton(
