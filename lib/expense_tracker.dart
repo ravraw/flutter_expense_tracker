@@ -49,6 +49,7 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
     setState(() {
       _dummyExpenses.remove(expense);
     });
+    ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text("${expense.title} removed!"),
