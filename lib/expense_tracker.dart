@@ -38,11 +38,17 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
     ),
   ];
 
+  void _addExpense(Expense expense) {
+    setState(() {
+      _dummyExpenses.add(expense);
+    });
+  }
+
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return const NewExpense();
+        return NewExpense(_addExpense);
       },
     );
   }
