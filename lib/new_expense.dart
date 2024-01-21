@@ -37,6 +37,21 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _submitExpense() {
+    final title = _titleController.text.trim();
+    final amount = double.tryParse(_amountController.text) ?? 0.0;
+    if (title.isEmpty || amount <= 0 || _selectedDate == null) {
+      return;
+    }
+    final newExpense = expense_model.Expense(
+      title: title,
+      amount: amount,
+      date: _selectedDate!,
+      category: _selectedCategory ?? expense_model.Category.other,
+    );
+    Navigator.of(context).pop(newExpense);
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -113,7 +128,16 @@ class _NewExpenseState extends State<NewExpense> {
                 child: const Text("Cancel"),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  print(_selectedDate);
+                },
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                  ),
+                ),
                 child: const Text("Save Exp"),
               )
             ],
