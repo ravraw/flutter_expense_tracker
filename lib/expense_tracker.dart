@@ -44,6 +44,12 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
     });
   }
 
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _dummyExpenses.remove(expense);
+    });
+  }
+
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -69,7 +75,10 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
       body: Column(
         children: [
           const Text("Expense Dashboard"),
-          ExpensesList(expenses: _dummyExpenses),
+          ExpensesList(
+            expenses: _dummyExpenses,
+            removeExpense: _removeExpense,
+          ),
         ],
       ),
     );
