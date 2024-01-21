@@ -41,6 +41,22 @@ class _NewExpenseState extends State<NewExpense> {
     final title = _titleController.text.trim();
     final amount = double.tryParse(_amountController.text) ?? 0.0;
     if (title.isEmpty || amount <= 0 || _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Invalid Expense"),
+          content: const Text(
+              "Please enter a valid title, amount, date and category."),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: const Text("Okay"),
+            )
+          ],
+        ),
+      );
       return;
     }
     final newExpense = expense_model.Expense(
@@ -84,7 +100,8 @@ class _NewExpenseState extends State<NewExpense> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('Selected Date'),
+                    Text(_selectedDate?.toString().split(' ').first ??
+                        "Select Date"),
                     const SizedBox(width: 8),
                     IconButton(
                       onPressed: _presentDatePicker,
@@ -128,9 +145,7 @@ class _NewExpenseState extends State<NewExpense> {
                 child: const Text("Cancel"),
               ),
               ElevatedButton(
-                onPressed: () {
-                  print(_selectedDate);
-                },
+                onPressed: _submitExpense,
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
