@@ -81,89 +81,92 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(16, 50, 16, keyboardSpace + 16),
-        child: Column(
-          children: [
-            TextField(
-              controller: _titleController,
-              decoration: const InputDecoration(labelText: "Title"),
-              maxLength: 50,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _amountController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                        prefixText: '\$ ', labelText: "Amount"),
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(_selectedDate?.toString().split(' ').first ??
-                          "Select Date"),
-                      const SizedBox(width: 8),
-                      IconButton(
-                        onPressed: _presentDatePicker,
-                        icon: const Icon(Icons.calendar_month),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                DropdownButton(
-                  value: _selectedCategory,
-                  items: expense_model.Category.values
-                      .map((category) => DropdownMenuItem(
-                            value: category,
-                            child: Text(describeEnum(category)
-                                    .characters
-                                    .first
-                                    .toUpperCase() +
-                                describeEnum(category).substring(1)),
-                          ))
-                      .toList(),
-                  onChanged: (value) {
-                    if (value == null) {
-                      return;
-                    }
-                    _setCategory(value);
-                  },
-                  hint: const Text("Select Category"),
-                ),
-                const Spacer(),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: TextButton.styleFrom(foregroundColor: Colors.red),
-                  child: const Text("Cancel"),
-                ),
-                ElevatedButton(
-                  onPressed: _submitExpense,
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
+    return SizedBox(
+      height: double.infinity,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(16, 50, 16, keyboardSpace + 16),
+          child: Column(
+            children: [
+              TextField(
+                controller: _titleController,
+                decoration: const InputDecoration(labelText: "Title"),
+                maxLength: 50,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _amountController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                          prefixText: '\$ ', labelText: "Amount"),
                     ),
                   ),
-                  child: const Text("Save Exp"),
-                )
-              ],
-            )
-          ],
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(_selectedDate?.toString().split(' ').first ??
+                            "Select Date"),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          onPressed: _presentDatePicker,
+                          icon: const Icon(Icons.calendar_month),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DropdownButton(
+                    value: _selectedCategory,
+                    items: expense_model.Category.values
+                        .map((category) => DropdownMenuItem(
+                              value: category,
+                              child: Text(describeEnum(category)
+                                      .characters
+                                      .first
+                                      .toUpperCase() +
+                                  describeEnum(category).substring(1)),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      if (value == null) {
+                        return;
+                      }
+                      _setCategory(value);
+                    },
+                    hint: const Text("Select Category"),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: TextButton.styleFrom(foregroundColor: Colors.red),
+                    child: const Text("Cancel"),
+                  ),
+                  ElevatedButton(
+                    onPressed: _submitExpense,
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                      ),
+                    ),
+                    child: const Text("Save Exp"),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
