@@ -79,6 +79,7 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     Widget expenseItemsList = const Center(
       child: Text("No Expenses Added Yet!"),
     );
@@ -90,21 +91,31 @@ class _ExpenseTrackerState extends State<ExpenseTracker> {
       );
     }
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Flutter Expense Tracker"),
-        actions: [
-          IconButton(
-            onPressed: _openAddExpenseOverlay,
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Chart(expenses: _dummyExpenses),
-          Expanded(child: expenseItemsList),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: const Text("Flutter Expense Tracker"),
+          actions: [
+            IconButton(
+              onPressed: _openAddExpenseOverlay,
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+        body: width < 600
+            ? Expanded(
+                child: Column(
+                  children: [
+                    Chart(expenses: _dummyExpenses),
+                    Expanded(child: expenseItemsList),
+                  ],
+                ),
+              )
+            : Expanded(
+                child: Row(
+                  children: [
+                    Chart(expenses: _dummyExpenses),
+                    Expanded(child: expenseItemsList),
+                  ],
+                ),
+              ));
   }
 }
